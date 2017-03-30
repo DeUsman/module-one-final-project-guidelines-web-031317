@@ -8,7 +8,7 @@ def fetch_and_seed_vehicle_type
 url = "https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMake/merc?format=json"
 response = HTTParty.get(url)
 	response["Results"].each do |car|
-		if(car["VehicleTypeName"] == "Passenger car" || car["VehicleTypeName"] == "Truck ")
+		if(car["VehicleTypeName"] == "Passenger Car" || car["VehicleTypeName"] == "Truck ")
         Type.find_or_create_by(name: car["VehicleTypeName"])
         end
 	end
