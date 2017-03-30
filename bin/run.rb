@@ -33,7 +33,7 @@ def fetch_and_seed_models
 	make_id = 0
 	Make.all.each do |make|
 		Type.all.each do |type|
-			type = type.name.gsub(" ", "_")
+			add_underscore_type = type.name.gsub(" ", "_")
 			
 			if (make.name == "Ford")
 				make_id = 460
@@ -45,7 +45,7 @@ def fetch_and_seed_models
 				make_id = 515
 			elsif (make.name == "BMW")
 				make_id = 452
-			elsif (make.name == "Mercedes-benz")
+			elsif (make.name == "Mercedes-Benz")
 				make_id = 449
 			elsif(make.name == "Cadillac")
 				make_id = 469
@@ -58,23 +58,20 @@ def fetch_and_seed_models
 			end
 
 
-			url = "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/#{make_id}/vehicleType/#{type}?format=json"
+			url = "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/#{make_id}/vehicleType/#{add_underscore_type}?format=json"
 			response = HTTParty.get(url)
 				response["Results"].each do |car|
-					binding.pry
-				model = Model.find_or_create_by(car["Model_Name"])
-				model.make = make.id
-				model.type = type.id
+				model = Model.find_or_create_by(name: car["Model_Name"])
+				model.make_id = make.id
+				model.type_id = type.id
 				model.save
 				end
-			
 		end
 	end
 	
 end
 
 
-fetch_and_seed_makes
 binding.pry
  
 
