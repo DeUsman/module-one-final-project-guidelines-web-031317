@@ -20,7 +20,7 @@ url = "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format
 response = HTTParty.get(url)
 	response["Results"].each do |car|
 		if(car["MakeName"] == "Ford" || car["MakeName"] == "Honda" || car["MakeName"] == "Acura" || car["MakeName"] == "Lexus" || car["MakeName"] == "BMW" || car["MakeName"] == "Mercedes-Benz" || car["MakeName"] == "Cadillac" || car["MakeName"] == "Jaguar" || car["MakeName"] == "Toyota" || car["MakeName"] = "Nissan")
-        Make.find_or_create_by(name: car["MakeName"].downcase)
+        Make.find_or_create_by(name: car["MakeName"])
         end
 
 	end	
@@ -35,25 +35,25 @@ def fetch_and_seed_models
 		Type.all.each do |type|
 			type = type.name.gsub(" ", "_")
 			
-			if (make.name == "ford")
+			if (make.name == "Ford")
 				make_id = 460
-			elsif (make.name == "honda")
+			elsif (make.name == "Honda")
 				make_id = 474
-			elsif (make.name == "acura")
+			elsif (make.name == "Acura")
 				make_id = 475
-			elsif (make.name == "lexus")
+			elsif (make.name == "Lexus")
 				make_id = 515
-			elsif (make.name == "bmw")
+			elsif (make.name == "BMW")
 				make_id = 452
-			elsif (make.name == "mercedes-benz")
+			elsif (make.name == "Mercedes-benz")
 				make_id = 449
-			elsif(make.name == "cadillac")
+			elsif(make.name == "Cadillac")
 				make_id = 469
-			elsif (make.name == "jaguar")
+			elsif (make.name == "Jaguar")
 				make_id = 442
-			elsif (make.name == "toyota")
+			elsif (make.name == "Toyota")
 				make_id = 448
-			elsif (make.name == "nissan")
+			elsif (make.name == "Nissan")
 				make_id = 478
 			end
 
@@ -73,8 +73,8 @@ def fetch_and_seed_models
 	
 end
 
-fetch_and_seed_vehicle_type
-#fetch_and_seed_makes
+
+fetch_and_seed_makes
 binding.pry
  
 
