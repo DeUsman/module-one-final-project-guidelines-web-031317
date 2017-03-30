@@ -72,7 +72,7 @@ def fetch_and_seed_models
 end
 
 
-binding.pry
+
  
 
 
