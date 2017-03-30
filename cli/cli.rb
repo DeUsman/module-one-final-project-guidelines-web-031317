@@ -1,13 +1,13 @@
 require_relative '../config/environment'
 require "pry"
 
-puts "WELCOME TO USMAN'S WONDERFUL CAR DATABSE"
+system "clear"
 puts ""
-puts "---------------------------------------"
+puts "***************************************"
 puts ""
 puts "Welcome to Usman's Car Data Universe!!!"
 puts ""
-puts "---------------------------------------"
+puts "***************************************"
 puts ""
 
 def exit
@@ -48,6 +48,7 @@ def get_car_brand(user_input_type, user_name)
   			
   		end
   		puts "Please make your selection by entering the 'Model_Id' and your vehicle will be delivered to your doorstep within 3 business days"
+  		
   		user_inpit_choose_model = gets.chomp.to_i
   		final_sales(user_inpit_choose_model, car_brand, user_name)
   		else
@@ -59,6 +60,7 @@ def get_car_brand(user_input_type, user_name)
   end
 
   def final_sales(user_inpit_choose_model, car_brand, user_name)
+  	system "clear"
   	puts "#{Make.find(car_brand).name} #{Model.find(user_inpit_choose_model).name} is an excelellent choice.\n This vehicle comes with a five year warranty and 3 complimentary oil changes."
   	puts ""
   	puts "Please enter your address for delivery:"
@@ -85,6 +87,8 @@ def get_car_brand(user_input_type, user_name)
   	else
   		puts "Good Bye! #{user_name}"
   end
+  system("open https://www.youtube.com/watch?v=LlhKZaQk860")
+
 end
 
 	def get_car_type(user_name)
@@ -116,19 +120,21 @@ end
 #-----------------------------------------------------------------
 
 def user_intro
-  puts ""
   puts "What is your name?"
   puts ""
   user_name = gets.chomp
   if user_name.downcase == "exit"
+  	system "clear"
     exit
   elsif user_name == nil || user_name == ""
     get_name
   else
-    puts " '1' * 20"
-    puts " '2' * 20"
+  	system "clear"
+    puts "------------------------"
+
     # puts "Hi #{name}! What kind of car you inquiring about?"
     puts "Hi #{user_name.upcase}! Please choose a VEHICLE TYPE"
+
     get_car_type(user_name)
   end
 end
