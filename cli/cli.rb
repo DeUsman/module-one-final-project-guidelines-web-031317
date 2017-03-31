@@ -43,7 +43,7 @@ end
 def welcome_sketch
 puts "     *********************************************".color(:white).background(:magenta)
 puts ""
-puts "     *  WELCOME TO USMAN'S BEST CAR UNIVERSE!!!  *".color(:black).background(:magenta)
+puts "     *  WELCOME TO USMAN AND DANIEL BEST CAR UNIVERSE!!!  *".color(:black).background(:magenta)
 puts ""
 puts "     *********************************************".color(:white).background(:magenta)
 car_sketch
@@ -53,11 +53,11 @@ def welcome_intro
 system "clear"
 
 puts ""
-puts "***************************************".color(:white).background(:magenta)
+puts "************************************************".color(:white).background(:magenta)
 puts ""
-puts "Welcome to Usman's Car Data Universe!!!".color(:black).background(:magenta)
+puts "WELCOME TO USMAN AND DANIEL BEST CAR UNIVERSE!!!".color(:black).background(:magenta)
 puts ""
-puts "***************************************".color(:white).background(:magenta)
+puts "************************************************".color(:white).background(:magenta)
 puts ""
 puts ""
  welcome_message
