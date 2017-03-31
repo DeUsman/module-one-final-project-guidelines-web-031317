@@ -1,20 +1,24 @@
 require_relative '../config/environment'
 require "pry"
 require "rainbow"
-
+require 'net/http'
+require 'rest-client'
+require 'json'
 
 def black_color
-	puts "                                                                                                                        ".background(:red)
-	puts "                                                                                                                        ".background(:black)
-	puts "                                                                                                                        ".background(:blue)
+	puts "                                                                                                                                                                                     ".background(:red)
+	puts "                                                                                                                                                                                     ".background(:black)
+	puts "                                                                                                                                                                                     ".background(:blue)
 end
 
 system "clear"
 20000.times do 
 	black_color 
-	puts "LOADING APPLICATION PLEASE WAIT.......................................".color(:black).background(:white)
+	puts "LOADING APPLICATION PLEASE WAIT.......................................                                                                                                               ".color(:black).background(:white)
 end
+
 system "clear"
+
 puts ""
 puts "***************************************".color(:white).background(:magenta)
 puts ""
@@ -22,7 +26,7 @@ puts "Welcome to Usman's Car Data Universe!!!".color(:black).background(:magenta
 puts ""
 puts "***************************************".color(:white).background(:magenta)
 puts ""
-pid = fork{ exec '06 - Mano Ya Na Mano [Songs.PK]','-q', file }
+#pid = fork{ exec '06 - Mano Ya Na Mano [Songs.PK]','-q', file }
 
 def exit
 system "clear"
@@ -69,10 +73,11 @@ def get_car_brand(user_input_type, user_name)
   					return user_intro
   				end
   			end
-  		model_list = Model.all.each do |model|
-  			if (model.make_id == car_brand && model.type_id == user_input_type)
-  				puts "Model_Id: #{model.id}. #{model.name}".color(:white).background(:blue)
-  			end
+  			Model.all.each do |model|
+  					if (model.make_id == car_brand && model.type_id == user_input_type)
+  					puts "Model_Id: #{model.id}. #{model.name}".color(:white).background(:blue)
+  					end
+  				
   		end
   		puts "\nPlease make your selection by entering the 'Model_Id':".color(:green).background(:black)
   		puts "\nTo quit, type 'EXIT'.".color(:white).background(:black)
@@ -81,8 +86,8 @@ def get_car_brand(user_input_type, user_name)
   		user_input_choose_model = user_input_choose_model_string.to_i
   		if (user_input_choose_model_string == "exit")
   		return exit
-  		elsif (model_list.include?(user_input_choose_model))
-  		final_sales(user_input_choose_model, car_brand, user_name)
+  		elsif (Model.find(user_input_choose_model))
+  		final_sales(user_input_type,user_input_choose_model, car_brand, user_name)
   		else
     	puts "".color(:red).background(:black)
     	puts "PLEASE CHOOSE A VALID ENTRY".color(:red).background(:black)
@@ -91,36 +96,63 @@ def get_car_brand(user_input_type, user_name)
 	end
  end
 
-  def final_sales(user_inpit_choose_model, car_brand, user_name)
+  def final_sales(user_input_type, user_input_choose_model, car_brand, user_name)
   	system "clear"
-  	puts "#{Make.find(car_brand).name} #{Model.find(user_inpit_choose_model).name} is an excelellent choice.\n This vehicle comes with a five year warranty and 3 complimentary oil changes."
+  	puts "#{Make.find(car_brand).name} #{Model.find(user_input_choose_model).name} is an excelellent choice.\nThis vehicle comes with a five year warranty and 3 complimentary oil changes.".color(:black).background(:yellow)
   	puts ""
-  	puts "Please enter your address for delivery:"
+  	puts "Please enter your address for delivery:".color(:green).background(:black)
+  	puts "You can type 'EXIT' to exit the application:\n".color(:black)
   	user_address = gets.chomp
+  	if (user_address == 'exit' || user_address == 'EXIT')
+  		return exit
+  	end
   	puts ""
-  	puts "Please enter your phone number"
-  	puts ""
+  	puts "Please enter your phone number.".color(:green).background(:black)
+  	puts "You can type 'EXIT' to exit the application:\n".color(:black)
+  	
   	user_number = gets.chomp
+  	if(user_number == 'exit' || user_number == 'EXIT')
+  		return exit
+  	end
+  	system "clear"
   	puts ""
-  	puts "Thank you so much '#{user_name} for shopping with us, we really appreciate your business.\n Before you go would you like to rate your experience at our dealership today?\n Input 'yes' or 'no' to continue:"
+  	puts "Thank you so much '#{user_name} for shopping with us, we really appreciate your business.\nBefore you go would you like to rate your experience at our dealership today?\nInput 'yes' or 'no' to continue:".color(:green).background(:black)
   	puts ""
   	user_rating = gets.chomp
+  	system "clear"
   	if(user_rating == "yes")
   		10.times do |n|
-  			puts n+1
+  			puts "\n#{n+1}".color(:red)
   		end
   		puts ""
   		puts "Please enter your selection below (1 = poor, 10 = Very Satisfied)"
   		puts ""
   		user_feedback = gets.chomp
-  		puts "Thank you once again for your feed back and your business.\n \nIt was a pleasure doing business with you.\n Please recommend us to friends and family and hope to see you again."
+  		system "clear"
+  		puts "Thank you once again for your feed back and your business.\n\nIt was a pleasure doing business with you.\nPlease recommend us to friends and family and hope to see you again."
   		puts ""
-  		puts "Good Bye! #{user_name}"
-  	else
-  		puts "Good Bye! #{user_name}"
-  end
-  system("open https://www.youtube.com/watch?v=LlhKZaQk860")
-
+  		puts "Good Bye! #{user_name}\n"
+  		1.times do 
+  			puts "A web page will open to congratulate you on your purchase."
+  			sleep(5)
+  		end
+  		Sale.create(customer_name: "user_name", vehicle_model: "#{Model.find(user_input_choose_model).name}", vehicle_make: "#{Make.find(car_brand).name}", vehicle_type: "#{Type.find(user_input_type).name}", vehicle_cost: "????", address: user_address, phone: user_number, rating: user_feedback)
+        system("open https://www.youtube.com/watch?v=LlhKZaQk860")
+        return exit
+    else
+     	user_feedback = 0
+    	system "clear"
+  		puts "Thank you once again for your feed back and your business.\n\nIt was a pleasure doing business with you.\nPlease recommend us to friends and family and hope to see you again."
+  		puts ""
+  		puts "Good Bye! #{user_name}\n"
+  		1.times do 
+  			puts "A web page will open to congratulate you on your purchase."
+  			sleep(5)
+  		end
+  		Sale.create(customer_name: "user_name", vehicle_model: "#{Model.find(user_input_choose_model).name}", vehicle_make: "#{Make.find(car_brand).name}", vehicle_type: "#{Type.find(user_input_type).name}", vehicle_cost: "????", address: user_address, phone: user_number, rating: user_feedback)
+        system("open https://www.youtube.com/watch?v=LlhKZaQk860")
+        return exit
+    end
 end
 
 	def get_car_type(user_name)
@@ -176,5 +208,7 @@ def user_intro
   end
 end
 
+
 user_intro
+
 

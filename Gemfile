@@ -7,3 +7,5 @@ gem "pry"
 gem "require_all"
 gem "httparty"
 gem "rainbow"
+gem "rest-client"
+gem 'json'
