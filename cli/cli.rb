@@ -1,39 +1,67 @@
 require_relative '../config/environment'
 require "pry"
+require "rainbow"
+
+
+def black_color
+	puts "                                                                                                                        ".background(:red)
+	puts "                                                                                                                        ".background(:black)
+	puts "                                                                                                                        ".background(:blue)
+end
 
 system "clear"
+20000.times do 
+	black_color 
+	puts "LOADING APPLICATION PLEASE WAIT.......................................".color(:black).background(:white)
+end
+system "clear"
 puts ""
-puts "***************************************"
+puts "***************************************".color(:white).background(:magenta)
 puts ""
-puts "Welcome to Usman's Car Data Universe!!!"
+puts "Welcome to Usman's Car Data Universe!!!".color(:black).background(:magenta)
 puts ""
-puts "***************************************"
+puts "***************************************".color(:white).background(:magenta)
 puts ""
+pid = fork{ exec '06 - Mano Ya Na Mano [Songs.PK]','-q', file }
 
 def exit
-  puts "***********"
-  puts "| Goodbye |"
-  puts "***********"
+system "clear"
+	20000.times do 
+	black_color 
+	puts "EXITING APPLICATION PLEASE WAIT.......................................".color(:black).background(:white)
+	end
+	system "clear"
+  puts "******************".color(:red).background(:black)
+  puts "******************".color(:red).background(:black)
+  puts "******************".color(:red).background(:black)
+  puts "| G o o d  b y e |".color(:red).background(:black)
+  puts "******************".color(:red).background(:black)
+  puts "******************".color(:red).background(:black)
+  puts "******************".color(:red).background(:black)
 end
 
 def get_car_brand(user_input_type, user_name)
-	puts "Please type 'exit' to exit the program."
 	puts ""
 	Make.all.each do |make|
-  		puts "ID: #{make.id}. #{make.name}"
+  		puts "ID: #{make.id}. #{make.name}".color(:white).background(:blue)
   	end
-	car_brand = gets.chomp.to_i
+  	puts "\nPlease type 'exit' to exit the program.\n".color(:red).background(:black)
+
+	car_brand_string = gets.chomp
+	car_brand = car_brand_string.to_i
 	
-  	if (car_brand.to_i == 0)
+  	if (car_brand_string == "exit")
+  		system "clear"
     return exit
 
   	elsif (Make.exists?(car_brand))
-  		puts "Here is a list of all **  #{Make.find(car_brand).name} #{Type.find(user_input_type).name} ** in our inventory:"
+  		system "clear"
+  		puts "Here is a list of all ** #{Make.find(car_brand).name}-#{Type.find(user_input_type).name} ** in our inventory:".color(:green).background(:black)
   		puts ""
   		
   		nil_test = Model.find_by(make_id: "#{car_brand}", type_id: "#{user_input_type}")
   			if(nil_test == nil)
-  				puts " I am sorry currently we do not have any #{Make.find(car_brand).name} #{Type.find(user_input_type).name} in our inventory.\n Would you like to try again with a different 'type' and 'brand'?\n Please type 'yes' or 'no' to continue:"
+  				puts " I am sorry currently we do not have any #{Make.find(car_brand).name} #{Type.find(user_input_type).name} in our inventory.\n Would you like to try again with a different 'type' and 'brand'?\n Please type 'yes' or 'no' to continue:".color(:red)
   				try_again_input = gets.chomp.downcase
   				if (try_again_input == "no")
   					return exit
@@ -41,23 +69,27 @@ def get_car_brand(user_input_type, user_name)
   					return user_intro
   				end
   			end
-  		Model.all.each do |model|
+  		model_list = Model.all.each do |model|
   			if (model.make_id == car_brand && model.type_id == user_input_type)
-  				puts "Model_Id: #{model.id}. #{model.name}"
+  				puts "Model_Id: #{model.id}. #{model.name}".color(:white).background(:blue)
   			end
-  			
   		end
-  		puts "Please make your selection by entering the 'Model_Id' and your vehicle will be delivered to your doorstep within 3 business days"
+  		puts "\nPlease make your selection by entering the 'Model_Id':".color(:green).background(:black)
+  		puts "\nTo quit, type 'EXIT'.".color(:white).background(:black)
   		
-  		user_inpit_choose_model = gets.chomp.to_i
-  		final_sales(user_inpit_choose_model, car_brand, user_name)
+  		user_input_choose_model_string = gets.chomp
+  		user_input_choose_model = user_input_choose_model_string.to_i
+  		if (user_input_choose_model_string == "exit")
+  		return exit
+  		elsif (model_list.include?(user_input_choose_model))
+  		final_sales(user_input_choose_model, car_brand, user_name)
   		else
-
-    	puts ""
-    	puts "PLEASE CHOOSE A VALID ENTRY"
-    	get_car_brand
+    	puts "".color(:red).background(:black)
+    	puts "PLEASE CHOOSE A VALID ENTRY".color(:red).background(:black)
+    	get_car_brand(user_input_type, user_name)
     end
-  end
+	end
+ end
 
   def final_sales(user_inpit_choose_model, car_brand, user_name)
   	system "clear"
@@ -92,23 +124,28 @@ def get_car_brand(user_input_type, user_name)
 end
 
 	def get_car_type(user_name)
-
+	system "clear"
+	"\n"
+	"\n"
 	Type.all.each do |type|
-		puts "ID:#{type.id}. #{type.name}."
+		puts "\n#{type.id}. #{type.name}.".color(:white).background(:blue)
 	end
 	puts ""
-	puts" Please enter the Id Number of the type of vehicle you are interested in:"
+	puts"#{user_name.capitalize} please enter the Id Number of the type of vehicle you are interested in:\n".color(:green).background(:black)
   	car_type_validater = Type.all.collect do |type|
   							type.id
   						end
-  	user_input_type = gets.chomp.to_i
+  	user_input_type_string = gets.chomp
+  	user_input_type = user_input_type_string.to_i
     
 
-  	if user_input_type == "exit"
+  	if user_input_type_string == "exit"
+  		system "clear"
     	return exit
   	elsif car_type_validater.include?(user_input_type)
+  		system "clear"
     	puts "----------------------------------------"
-    	puts "GREAT! Please choose a car brand"
+    	puts "GREAT! You have choosen #{Type.find(user_input_type).name}.\n\nNow please select the 'MAKE' of the vehicle:".color(:green).background(:black)
     	puts ""
     	get_car_brand(user_input_type, user_name)
   	else
@@ -120,7 +157,7 @@ end
 #-----------------------------------------------------------------
 
 def user_intro
-  puts "What is your name?"
+  puts "What is your name?".color(:green).background(:black)
   puts ""
   user_name = gets.chomp
   if user_name.downcase == "exit"
@@ -133,7 +170,7 @@ def user_intro
     puts "------------------------"
 
     # puts "Hi #{name}! What kind of car you inquiring about?"
-    puts "Hi #{user_name.upcase}! Please choose a VEHICLE TYPE"
+    puts "Hi #{user_name.upcase}! Please choose a VEHICLE TYPE".color(:red)
 
     get_car_type(user_name)
   end
