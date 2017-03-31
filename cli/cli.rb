@@ -140,7 +140,7 @@ def get_car_brand(user_input_type, user_name)
         system("open https://www.youtube.com/watch?v=LlhKZaQk860")
         return exit
     else
-     	user_feedback = 0
+     	user_feedback = nil
     	system "clear"
   		puts "Thank you once again for your feed back and your business.\n\nIt was a pleasure doing business with you.\nPlease recommend us to friends and family and hope to see you again."
   		puts ""
