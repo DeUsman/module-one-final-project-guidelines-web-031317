@@ -12,7 +12,7 @@ def black_color
 end
 
 system "clear"
-20000.times do 
+5000.times do 
 	black_color 
 	puts "LOADING APPLICATION PLEASE WAIT.......................................                                                                                                               ".color(:black).background(:white)
 end
@@ -160,7 +160,7 @@ end
 
 def exit
 system "clear"
-	20000.times do 
+	5000.times do 
 	black_color 
 	puts "EXITING APPLICATION PLEASE WAIT.......................................".color(:black).background(:white)
 	end
