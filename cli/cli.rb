@@ -5,17 +5,7 @@ require 'net/http'
 require 'rest-client'
 require 'json'
 
-def black_color
-	puts "                                                                                                                                                                                     ".background(:red)
-	puts "                                                                                                                                                                                     ".background(:black)
-	puts "                                                                                                                                                                                     ".background(:blue)
-end
-
 system "clear"
-5000.times do 
-	black_color 
-	puts "LOADING APPLICATION PLEASE WAIT.......................................                                                                                                               ".color(:black).background(:white)
-end
 
 def car_sketch
   puts "          __---~~~~--__                      __--~~~~---__               ".color(:blue)
@@ -160,8 +150,7 @@ end
 
 def exit
 system "clear"
-	5000.times do 
-	black_color 
+	25000.times do  
 	puts "EXITING APPLICATION PLEASE WAIT.......................................".color(:black).background(:white)
 	end
 
